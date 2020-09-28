@@ -1,0 +1,48 @@
+---
+title: "LIFE Study sites"
+author: "Kira Elsbernd"
+date: "23/09/2020"
+output: 
+    html_document:
+        keep_md: yes
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_knit$set(root.dir = "~/Documents/1_School/4_LMU/5_Courses/10_Data products/data_products_wk2")
+```
+
+```{r load packages, include = FALSE}
+library(leaflet)
+library(dplyr)
+```
+
+The LIFE Study operates at the below sites in Mozambique and Tanzania. 
+
+```{r, warning = FALSE, message = FALSE}
+
+sites <- data.frame(name = c("Nhaconjo", "Munhava", "Ponta Gea", "Dondo", "Nhamaonha", "1 de Maio", 
+                             "Macurrungo", "Chingusurra", "Mafambisse", "7 de Abril", "Gondola", "Igawilo", "Chunya",
+                             "Tukuyu", "Ruanda", "Chimala", "Itete", "Iyula", "Chalangwa", "Ilembo", "Kiwanjampaka",
+                             "Igogwe"),
+                    lat = c(-19.767470, -19.811894, -19.840150, -19.617475, -19.108520, -19.113005, -19.834989, 
+                            -19.744088, -19.528470, -19.142602, -19.076444, -8.6166579, -8.517675, -9.251458, 
+                            -8.907997, -8.861454, -9.283585, -9.065504, -8.635528, -9.196822, -8.891539,
+                            -9.151648), 
+                    lng = c(34.869487, 34.863471, 34.842883, 34.741164, 33.477786, 33.458242, 34.884830, 34.860668, 
+                            34.625539, 33.476426, 33.641650, 34.666688, 33.425774, 33.641853, 33.459752,
+                            34.032897, 33.843083, 33.136366, 33.559203, 33.353406, 33.433794, 33.522349))
+
+sites_map <- sites %>%
+    leaflet() %>%
+    addTiles() %>%
+    addMarkers(popup = sites$name, clusterOptions = markerClusterOptions())
+
+sites_map
+
+```
